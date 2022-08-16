@@ -5,7 +5,6 @@ import authMiddleware from "../middlewares/authMiddleware";
 
 const router = Router();
 
-
 // sign in and sign out
 router.post('/signin', authController.signIn);
 router.post('/signout', authMiddleware.authentication, authController.signOut);

@@ -25,7 +25,7 @@ const readUser = async function (req: Request, res: Response) : Promise<Response
   try {
     const user = await userModel.findOne({username: req.params.username});
 
-    if (!user) return res.json({result: 'user does not exist!'});
+    if (!user) return res.json({error: 'user does not exist!'});
 
     return res.json(user);
   } catch (err) {
@@ -37,8 +37,8 @@ const updateUser = async function (req: Request, res: Response):  Promise<Respon
   try {
     const auth = req.auth;
 
-    const user = await userModel.findOne({_id: auth._id});
-    if (!user) return res.json({result: 'user does not exist!'});
+    const user = await userModel.findOne({_id: auth.id});
+    if (!user) return res.json({error: 'user does not exist!'});
 
     user.name = req.body.name || user.name;
     user.username = req.body.username || user.username;
@@ -46,7 +46,7 @@ const updateUser = async function (req: Request, res: Response):  Promise<Respon
 
     await user.save();
 
-    res.json(user);
+    return res.json(user);
   } catch (err) {
     return res.json({error: err});
   }
@@ -57,10 +57,10 @@ const deleteUser = async function (req: Request, res: Response):  Promise<Respon
   try {
     const auth = req.auth;
 
-    const user = await userModel.findOne({_id: auth._id});
-    if (!user) return res.json({result: 'user does not exist!'});
+    const user = await userModel.findOne({_id: auth.id});
+    if (!user) return res.json({error: 'user does not exist!'});
 
-    await userModel.deleteOne({_id: user._id});
+    await userModel.deleteOne({_id: user.id});
 
     return res.json({result: 'user successfully deleted!'});
   } catch (err) {

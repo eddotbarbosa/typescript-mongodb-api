@@ -9,13 +9,13 @@ const createPost = async function (req: Request, res: Response): Promise<Respons
     const auth = req.auth;
 
     const newPost = new postModel({
-      author: auth._id,
+      author: auth.id,
       content: req.body.content
     });
 
     const post = await newPost.save();
 
-    const user = await userModel.findOne({_id: auth._id});
+    const user = await userModel.findOne({_id: auth.id});
 
     user.posts.push(post._id);
 
@@ -27,16 +27,16 @@ const createPost = async function (req: Request, res: Response): Promise<Respons
   }
 };
 
-const readPost = async function (req, res) {
+const readPost = async function (req: Request, res: Response): Promise<Response> {
   try {
     const post = await postModel.findOne({_id: req.params.post})
       .populate({path: 'author', select: 'name username'});
 
-    if (!post) return res.json({result: 'post does not exist!'});
+    if (!post) return res.json({error: 'post does not exist!'});
 
-    res.json(post);
+    return res.json(post);
   } catch (err) {
-    res.json({error: err});
+    return res.json({error: err});
   }
 };
 
@@ -45,9 +45,9 @@ const updatePost = async function (req: Request, res: Response): Promise<Respons
     const auth = req.auth;
 
     const post = await postModel.findOne({_id: req.body.id});
-    if (!post) return res.json({result: 'post does not exist!'});
+    if (!post) return res.json({error: 'post does not exist!'});
 
-    if (post.author.toString() !== auth._id) return res.json({result: 'you are not the author of this post!'});
+    if (post.author.toString() !== auth.id) return res.json({error: 'you are not the author of this post!'});
 
     post.content = req.body.content || post.content;
 
@@ -66,11 +66,11 @@ const deletePost = async function (req: Request, res: Response): Promise<Respons
     const post = await postModel.findOne({_id: req.body.id});
     if (!post) return res.json({result: 'post does not exist!'});
 
-    if (post.author.toString() !== auth._id) return res.json({result: 'you are not the author of this post!'});
+    if (post.author.toString() !== auth.id) return res.json({error: 'you are not the author of this post!'});
 
     await postModel.deleteOne({_id: post._id});
 
-    const user = await userModel.findOne({_id: auth._id});
+    const user = await userModel.findOne({_id: auth.id});
 
     user.posts.pull(post._id);
 

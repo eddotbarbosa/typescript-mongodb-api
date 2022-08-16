@@ -9,12 +9,12 @@ interface CustomPayload extends JwtPayload {
 const authentication = async function (req: Request, res: Response, next: NextFunction ): Promise<Response> {
   try {
     const token = req.headers.authorization;
-    if (!token) return res.json({result: 'token not provided!'});
+    if (!token) return res.json({error: 'token not provided!'});
 
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET) as CustomPayload;
 
     req.auth = {
-      _id: decodedToken._id,
+      id: decodedToken.id,
       username: decodedToken.username,
       iat: decodedToken.iat,
       exp: decodedToken.exp
