@@ -52,7 +52,7 @@ build
 ```
 npm build
 ```
-run Build
+run build
 ```
 npm start
 ```
