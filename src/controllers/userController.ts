@@ -1,6 +1,6 @@
 import {Request, Response} from 'express';
 import {Document} from 'mongoose';
-import userModel from '../models/user.model';
+import userModel from '../models/userModel';
 
 // user CRUD
 const createUser = async function (req: Request, res: Response): Promise<Response> {

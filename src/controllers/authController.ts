@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from 'bcrypt';
 import {Request, Response} from "express";
 
-import userModel from "../models/user.model";
+import userModel from "../models/userModel";
 
 // sign in and sign out
 const signIn = async function (req: Request, res: Response): Promise<Response> {

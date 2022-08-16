@@ -1,7 +1,7 @@
 import {Request, Response} from 'express';
 
-import postModel from '../models/post.model';
-import userModel from '../models/user.model';
+import postModel from '../models/postModel';
+import userModel from '../models/userModel';
 
 // post CRUD
 const createPost = async function (req: Request, res: Response): Promise<Response> {

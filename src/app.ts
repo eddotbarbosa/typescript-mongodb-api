@@ -2,9 +2,9 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
-import userRoutes from './routes/user.route';
-import authRoutes from './routes/auth.route';
-import postRoutes from './routes/post.route';
+import userRoutes from './routes/userRoute';
+import authRoutes from './routes/authRoute';
+import postRoutes from './routes/postRoute';
 
 export const app = express();
 
