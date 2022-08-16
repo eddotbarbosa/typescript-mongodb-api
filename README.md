@@ -48,11 +48,11 @@ tests
 ```
 npm test
 ```
-Build
+build
 ```
 npm build
 ```
-Run Build
+run Build
 ```
 npm start
 ```
